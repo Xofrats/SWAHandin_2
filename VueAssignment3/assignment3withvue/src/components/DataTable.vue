@@ -19,7 +19,7 @@
 <script>
 export default {
   emits: ['update'],
-  name: "Personnel",
+  name: "DataTable",
   props: {
     measures: Array
   },

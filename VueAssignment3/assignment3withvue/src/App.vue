@@ -3,17 +3,17 @@
   <h1>Weather data</h1>
   <div id="dynamic-component-demo" class="demo">
     <h1>Latest measures</h1>
-    <personnel :measures='measures' @update='update'/>
+    <DataTable :measures='measures' @update='update'/>
   </div>
 
   <div id="dynamic-component-demo" class="demo">
     <h1>Minimum temperature for the last 5 days</h1>
-    <personnel :measures='minTemp' @update='update'/>
+    <DataTable :measures='minTemp' @update='update'/>
   </div>
 
   <div id="dynamic-component-demo" class="demo">
     <h1>Maximum temperature for the last 5 days</h1>
-    <personnel :measures='maxTemp' @update='update'/>
+    <DataTable :measures='maxTemp' @update='update'/>
   </div>
 
    <div id="dynamic-component-demo" class="demo">
@@ -28,13 +28,13 @@
 
    <div id="dynamic-component-demo" class="demo">
     <h1>Hourly predictions for the next 24 hours.</h1>
-    <personnel :measures='hourlyPrediction' @update='update'/>
+    <DataTable :measures='hourlyPrediction' @update='update'/>
   </div>
 </div>
 </template>
 
 <script>
-import Personnel from "@/components/Personnel"
+import DataTable from "@/components/DataTable"
 import computedDataTable from "@/components/computedDataTable"
 
 export default {
@@ -61,7 +61,7 @@ export default {
       } 
   },
   components: {
-    Personnel,
+    DataTable,
     computedDataTable
   }
 }
