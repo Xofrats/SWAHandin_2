@@ -1,0 +1,57 @@
+<html>
+<head> 
+    <title>People</title>
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+        table {
+            border: 1px solid black;
+            border-spacing: 0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script type = 'module'>
+        import model from './model.js'
+        import viewmodel from './viewmodel.js'
+        
+        const init = function() {
+
+const theView = view(window)
+Promise.all([fetch('http://localhost:8080/data'), fetch('http://localhost:8080/forecast')])
+// .then(res => res.every(r => r.ok ? r : Promise.reject('Error message')))
+.then(res => res.map(r => r.json()))
+.then(r => Promise.all(r))
+.then(([data, forecast]) => {
+    theModel = model(data, forecast)
+    const vm = viewmodel(document.getElementById('base'), theModel)
+    const app = new Vue(vm)
+})
+.catch( e => theView.displayError(e))
+}
+    </script>
+</head>
+<body onload="init()">
+    <div id='base'>
+        <h1>Latest measurement for each kind</h1>
+        <table >
+            <thead><tr><th>Type</th><th>value</th><th>Unit</th><th>Time</th><th>place</th></tr></thead>
+            <tbody id='showMeasurementData'></tbody>
+        </table>
+        <table>
+            <thead><tr><td>Type</td></tr></thead>
+            <tbody>
+                <tr v-for="d in personData" :key="d.time">
+                    <td>{{ d.type }} </td>
+                </tr>
+            </tbody>
+        </table>
+        <p id='error messages'>
+    </div>
+
+    <div id="app"></div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+</body>
+</html>

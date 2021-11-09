@@ -1,4 +1,4 @@
-import { WindPrediction } from './WindPrediction.mjs'
+import { WindPrediction } from './WeatherPrediction.mjs'
 
 class WeatherForecast {
     constructor(data = []) {
@@ -13,7 +13,10 @@ class WeatherForecast {
 
     }
 
-    forType(){
+    forType(type){
+        const types = data => data.filter(WeatherPrediction => WeatherPrediction.getType() === type)
+
+        return new WeatherForecast(types)
 
     }
 
@@ -54,3 +57,4 @@ const predictions = [
     const forecast = new WeatherForecast(predictions)
 
     console.log(forecast.forPlace("VIA").getPredictions().length)
+    console.log(forecast.forType("Wind").getPredictions().length)
