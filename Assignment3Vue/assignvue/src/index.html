@@ -17,41 +17,36 @@
         import model from './model.js'
         import viewmodel from './viewmodel.js'
         
-        const init = function() {
-
-const theView = view(window)
-Promise.all([fetch('http://localhost:8080/data'), fetch('http://localhost:8080/forecast')])
-// .then(res => res.every(r => r.ok ? r : Promise.reject('Error message')))
-.then(res => res.map(r => r.json()))
-.then(r => Promise.all(r))
-.then(([data, forecast]) => {
-    theModel = model(data, forecast)
-    const vm = viewmodel(document.getElementById('base'), theModel)
-    const app = new Vue(vm)
-})
-.catch( e => theView.displayError(e))
-}
+        window.init = async function() {
+            const persons = await fetch('http://localhost:9090/persons').then(res => res.json())
+            const employees = await fetch('http://localhost:9090/employees').then(res => res.json())
+            const theModel = model(persons, employees)
+            const vm = viewmodel(document.getElementById('base'), theModel)
+            const app = new Vue(vm)
+        }
     </script>
 </head>
 <body onload="init()">
     <div id='base'>
-        <h1>Latest measurement for each kind</h1>
-        <table >
-            <thead><tr><th>Type</th><th>value</th><th>Unit</th><th>Time</th><th>place</th></tr></thead>
-            <tbody id='showMeasurementData'></tbody>
-        </table>
-        <table>
-            <thead><tr><td>Type</td></tr></thead>
-            <tbody>
-                <tr v-for="d in personData" :key="d.time">
-                    <td>{{ d.type }} </td>
+        <h1>People</h1>
+        <table id='employees'>
+            <thead><tr><td>Id</td><td>Name</td><td>Employee id</td><td>Salary</td><td>Manager</td></tr></thead>
+            <tbody id='employee_data'>
+                <tr v-for='p in personData'>
+                    <td>{{ p.id }} </td>
+                    <td>{{ p.name }} </td>
+                    <template v-if='p.employeeId'>
+                        <td>{{ p.employeeId }}</td>
+                        <td>{{ p.salary ?? 0 }}</td>
+                        <td>{{ Boolean(p.manager) }}</td>
+                    </template>
+                    <template v-else>
+                        <td colspan = "3"><button @click='hire(p.id)'>Hire</button></td>
+                    </template>
                 </tr>
             </tbody>
         </table>
-        <p id='error messages'>
+        <div>Salary: <input v-model:value='salary' id='salary'></div>
     </div>
-
-    <div id="app"></div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 </body>
 </html>

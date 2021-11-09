@@ -76,21 +76,21 @@ const alert = (id, severity, prediction) => {
         fetch('http://localhost:8080/data')
         .then(response => response.json())
         .then(data => console.log(data));
-        // const theView = view(window)
-        // theView.debug()
-        // Promise(fetch('http://localhost:8080/data'))
-        // .then(res => res.every(r => r.ok) ? r : Promise.reject('Error message'))
-        // .then(res => res.map(r => r.json()))
-        // .then((data) => {
-        //     const fetch_board = document.getElementById('fetch')
-        //     fetch_board,innerText = "Did it"
-            // const theModel = model(data)
-            // const thePresenter = presenter(theModel, theView)
-            // theView.listen(thePresenter.onAction)
-            // theView.update(theModel)
-    //     })
-    //     .catch( e => view.displayError(e))
-    // 
+        const theView = view(window)
+        theView.debug()
+        Promise(fetch('http://localhost:8080/data'))
+        .then(res => res.every(r => r.ok) ? r : Promise.reject('Error message'))
+        .then(res => res.map(r => r.json()))
+        .then((data) => {
+            const fetch_board = document.getElementById('fetch')
+            fetch_board,innerText = "Did it"
+            const theModel = model(data)
+            const thePresenter = presenter(theModel, theView)
+            theView.listen(thePresenter.onAction)
+            theView.update(theModel)
+        })
+        .catch( e => view.displayError(e))
+    
 }
 </script>
 </head>
