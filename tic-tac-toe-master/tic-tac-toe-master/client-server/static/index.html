@@ -1,0 +1,43 @@
+<html>
+<head> 
+    <title>Tic-tac-toe</title>
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+        }
+        td.blank {
+            background: white;
+        }
+        td.X {
+            background-image: url(X.png);
+        }
+        td.O {
+            background-image: url(O.png);
+        }
+        table {
+            border: 1px solid black;
+            border-spacing: 0;
+        }
+        #reset {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic-tac-toe</h1>
+    <p id = 'messages'></p>
+    <table id = 'board'></table>
+    <button id = 'reset'>Reset</button>
+</body>
+<script type="module">
+    import view from "./view.js"
+    import presenter from "./presenter.js"
+    import dispatcher from "./dispatcher.js"
+    const the_view = view()
+    const the_dispatcher = dispatcher('http://localhost:8080/')
+    const the_presenter = presenter(the_view, the_dispatcher)
+    the_view.listen(the_presenter)
+</script>
+</html>
